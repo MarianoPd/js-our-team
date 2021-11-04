@@ -31,32 +31,34 @@ const members = [
     },
 ]
 
-
 const team = document.querySelector('.team-container');
-
-layCards();
+//caricamento iniziale degli elementi
+layCards(team, members);
 
 const addButton = document.getElementById('addMemberButton');
 console.log(addButton);
 addButton.addEventListener('click', layAgain);
 
+// Funzione che prende il container .team-container e gli crea all'interno le card con gli oggetti di members
+function layCards(container, members){
+    container.innerHTML= '';
+    for(let key of members){
+        container.appendChild(makeCard(key));
+    }
+}
+
+
+//funzione che prende i parametri in imput *senza verificarli* e ne crea un oggetto, dopo di che reinserisce nell'html tutti gli oggetti 
 function layAgain(){
     const name = document.getElementById('name').value;
     const role = document.getElementById('role').value;
     const image = document.getElementById('image').value;
     members.push({name,role,image});
-    layCards();
+    layCards(team, members);
     console.log(members);
 }
 
-function layCards(){
-    team.innerHTML= '';
-    for(let key of members){
-        makeCard(key);
-    }
-}
-
-
+//crea una card e la riempie usando i valori di member
 function makeCard(member){
     const card = document.createElement('div');
     card.classList.add('team-card');
@@ -78,5 +80,6 @@ function makeCard(member){
 
     card.appendChild(cardImage);
     card.appendChild(cardText);
-    team.appendChild(card);
+
+    return card;
 }
